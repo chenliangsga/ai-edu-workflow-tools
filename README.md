@@ -11,6 +11,18 @@ returns structured, ready-to-use output.
 
 English | [简体中文说明见文末](#中文简介)
 
+## Screenshots
+
+| Dashboard | Smart practice |
+| --- | --- |
+| ![Dashboard](docs/images/dashboard.png) | ![Smart practice](docs/images/smart-practice.png) |
+
+| Mistake bank | Growth report |
+| --- | --- |
+| ![Mistake bank](docs/images/mistake-bank.png) | ![Growth report](docs/images/growth-report.png) |
+
+> The UI is currently in Chinese; internationalization is on the roadmap.
+
 ## Features
 
 - **Essay grading** — paste or upload an essay and get structured feedback

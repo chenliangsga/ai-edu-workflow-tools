@@ -79,7 +79,7 @@ const mailConfig = {
   user: process.env.SMTP_USER || process.env.MAIL_USER || "",
   pass: process.env.SMTP_PASS || process.env.MAIL_PASS || "",
   from: process.env.MAIL_FROM || process.env.SMTP_FROM || process.env.SMTP_USER || process.env.MAIL_USER || "",
-  appName: process.env.MAIL_APP_NAME || "AI 学习工作台",
+  appName: process.env.MAIL_APP_NAME || "AI Edu Workflow Tools",
   exposeDevCode: process.env.AUTH_EXPOSE_DEV_CODE !== "false" && process.env.NODE_ENV !== "production"
 };
 mailConfig.enabled = Boolean(mailConfig.host && mailConfig.user && mailConfig.pass);
