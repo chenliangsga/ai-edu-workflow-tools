@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>triangle_board_overlap 预览</title>
+<style>
+  body { font-family: system-ui, -apple-system, "PingFang SC", sans-serif; background: #f8fafc; margin: 0; padding: 24px; color: #0f172a; }
+  h1 { margin: 0 0 8px; font-size: 20px; }
+  p.note { color: #475569; font-size: 13px; margin: 0 0 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 16px; }
+  .card { background: white; border: 1px solid #dbeafe; border-radius: 12px; padding: 16px; }
+  .q { font-size: 14px; line-height: 1.7; color: #1e293b; margin-bottom: 8px; }
+  .ans { font-size: 13px; color: #16a34a; margin-top: 6px; }
+  .marker { font-family: ui-monospace, monospace; font-size: 11px; color: #64748b; background: #f1f5f9; padding: 4px 8px; border-radius: 6px; margin-top: 6px; display: inline-block; }
+</style>
+</head>
+<body>
+<h1>三角板共直角顶点重叠题 — 模板渲染预览</h1>
+<p class="note">所有图形完全由 <code>aod</code> 参数推导，∠AOB = ∠COD = 90°，∠AOD = aod，∠BOC = 180° − aod。题干与图形来自同一参数，不可能不一致。</p>
+<div class="grid" id="grid"></div>
+<script>
+function renderOverlap(aod, kind1, kind2, labels) {
+  const cx = 220, cy = 168, legLong = 130;
+  const legShort = legLong * Math.tan(30 * Math.PI / 180);
+  const polar = (deg, len) => [cx + Math.cos(deg*Math.PI/180)*len, cy - Math.sin(deg*Math.PI/180)*len];
+  const alphaA = 90 + aod/2, alphaD = 90 - aod/2;
+  const alphaB = alphaA - 90, alphaC = alphaD + 90;
+  const board = (alphaOuter, alphaInner, kind) => {
+    const innerLen = kind === 30 ? legShort : legLong;
+    return [[cx,cy], polar(alphaOuter, legLong), polar(alphaInner, innerLen)];
+  };
+  const t1 = board(alphaA, alphaB, kind1);
+  const t2 = board(alphaD, alphaC, kind2);
+  const arc = (h, l, r) => {
+    const s = polar(h, r), e = polar(l, r);
+    return `M ${s[0]} ${s[1]} A ${r} ${r} 0 0 0 ${e[0]} ${e[1]}`;
+  };
+  const labelPos = (a, len) => polar(a, len + 18);
+  const aP = labelPos(alphaA, legLong);
+  const bP = labelPos(alphaB, legLong);
+  const cP = labelPos(alphaC, kind2 === 30 ? legShort : legLong);
+  const dP = labelPos(alphaD, legLong);
+  const aodArcR = 50, bocArcR = 22;
+  const aodLabel = [cx + 80, cy - 12];
+  const bocLabel = [cx - 80, cy - 12];
+  const pts = (a) => a.map(p=>p.join(',')).join(' ');
+  return `<svg width="440" height="220" viewBox="0 0 440 220">
+    <polygon points="${pts(t2)}" fill="#fed7aa" fill-opacity="0.85" stroke="#c2410c" stroke-width="2"/>
+    <polygon points="${pts(t1)}" fill="#bfdbfe" fill-opacity="0.75" stroke="#1d4ed8" stroke-width="2"/>
+    <path d="${arc(alphaA, alphaD, aodArcR)}" fill="none" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="${aodLabel[0]}" y="${aodLabel[1]}" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e293b">∠${labels[0]}O${labels[3]}=${aod}°</text>
+    <path d="${arc(alphaC, alphaB, bocArcR)}" fill="none" stroke="#dc2626" stroke-width="2"/>
+    <text x="${bocLabel[0]}" y="${bocLabel[1]}" text-anchor="middle" font-size="12" font-weight="bold" fill="#dc2626">∠${labels[1]}O${labels[2]}</text>
+    <circle cx="${cx}" cy="${cy}" r="4" fill="#0f172a"/>
+    <text x="${cx+6}" y="${cy+18}" font-size="13" font-weight="bold" fill="#334155">O</text>
+    <text x="${aP[0]}" y="${aP[1]}" text-anchor="middle" font-size="13" font-weight="bold" fill="#1d4ed8">${labels[0]}</text>
+    <text x="${bP[0]}" y="${bP[1]}" text-anchor="middle" font-size="13" font-weight="bold" fill="#1d4ed8">${labels[1]}</text>
+    <text x="${cP[0]}" y="${cP[1]}" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">${labels[2]}</text>
+    <text x="${dP[0]}" y="${dP[1]}" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">${labels[3]}</text>
+  </svg>`;
+}
+
+const cases = [
+  { aod: 150, label: "原题：用户截图来源" },
+  { aod: 120, label: "变式 1" },
+  { aod: 135, label: "变式 2" },
+  { aod: 100, label: "变式 3（重叠大）" },
+  { aod: 170, label: "变式 4（接近共线）" }
+];
+
+const grid = document.getElementById("grid");
+for (const c of cases) {
+  const card = document.createElement("div");
+  card.className = "card";
+  const boc = 180 - c.aod;
+  card.innerHTML = `
+    <div class="q">如下图，将一副三角板按图示方式摆放，其中直角顶点重合。已知 ∠AOB = 90°，∠COD = 90°，若 ∠AOD = ${c.aod}°，则重叠部分 ∠BOC = （  ）°。</div>
+    <div class="marker">[图:triangle_board_overlap aod=${c.aod} labels=A,B,C,D kind1=45 kind2=30]</div>
+    ${renderOverlap(c.aod, 45, 30, ["A","B","C","D"])}
+    <div class="ans">参考答案：∠BOC = ${boc}°（${c.label}）</div>`;
+  grid.appendChild(card);
+}
+</script>
+</body>
+</html>

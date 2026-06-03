@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Runtime data (local JSONL storage, generated files, PDFs)
+data/
+output/
+tmp/
+
+# Secrets / local env
+.env
+.env.local
+
+# Python virtualenv (optional tooling)
+.venv/
+
+# OS / editor cruft
+.DS_Store
+*.log
