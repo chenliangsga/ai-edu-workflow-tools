@@ -1,8 +1,32 @@
 {
   "name": "ai-edu-workflow-tools",
   "version": "0.1.0",
-  "private": true,
+  "description": "Self-hostable AI workflows for everyday learning: essay grading, mistake analysis, and slide/report outlining, with photo upload. Works with any OpenAI-compatible API.",
   "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/chenliangsga/ai-edu-workflow-tools#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenliangsga/ai-edu-workflow-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chenliangsga/ai-edu-workflow-tools/issues"
+  },
+  "keywords": [
+    "ai",
+    "education",
+    "edtech",
+    "essay-grading",
+    "mistake-bank",
+    "spaced-repetition",
+    "openai",
+    "self-hosted",
+    "study-tools",
+    "workflow"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "vite --port=3000 --host=0.0.0.0",

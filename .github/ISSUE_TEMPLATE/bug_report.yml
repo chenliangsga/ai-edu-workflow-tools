@@ -1,0 +1,45 @@
+name: Bug report
+description: Report something that isn't working as expected
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, plus expected vs. actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps so we can reproduce it.
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. See error
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: Which tool / feature?
+      placeholder: Essay grading / Mistake analysis / Outline / Login / PDF export / other
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Node version, browser, storage mode (JSONL or MySQL), model/endpoint.
+      placeholder: |
+        - OS:
+        - Node: (node -v)
+        - Storage: JSONL / MySQL
+        - Model / endpoint:
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Relevant server logs or screenshots. Do NOT paste API keys or other secrets.
+      render: shell
